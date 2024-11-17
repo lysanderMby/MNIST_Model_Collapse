@@ -31,6 +31,12 @@ And after over 80 generations, a stable point seems to emerge. A kindd of smudge
 
 ![image](https://github.com/user-attachments/assets/c0d21a58-dcad-430e-b003-0e38d0d1ba3f)
 
+## Models collapsing before your very eyes
+
+Putting all this together into a longer run, we can see how model collapse causes the generations to tend towards a small self-reinforcing set. Rather than accurately sampling from the input distribution, excessive training on a model's own outputs causes very high confidence in outputs driven by model bias rather than the variance inherent in the data.
+
+![animation](https://github.com/user-attachments/assets/bc1ed16d-76af-4f46-b158-2ee943df3739)
+
 ## Key Findings
 
 - Model collapse does indeed happen, and in an application which can be considered somewhat commercially relevant. Many previous papers on model collapse focus on highly artificial settings. Some are only applicable to transformers (https://arxiv.org/pdf/2406.11263), only relevant to RAG or equivalent schemes which while useful do not threaten a foundation model's functionality, only affect tails of distributions (and as such may only threaten fact-based reasoning) (https://arxiv.org/abs/2403.07857), or are otherwise not suitably general. It has been shown in the case of LLMs that model collapse can lead to repetitive outputs (https://arxiv.org/abs/2311.09807). Much of the research has been performed in extremely synthetic environments (https://arxiv.org/abs/2402.07712).
