@@ -31,3 +31,24 @@ And after over 80 generations, a stable point seems to emerge. A kindd of smudge
 
 ![image](https://github.com/user-attachments/assets/c0d21a58-dcad-430e-b003-0e38d0d1ba3f)
 
+## Key Findings
+
+- Model collapse does indeed happen, and in an application which can be considered somewhat commercially relevant. Many previous papers on model collapse focus on highly artificial settings. Some are only applicable to transformers (https://arxiv.org/pdf/2406.11263), only relevant to RAG or equivalent schemes which while useful do not threaten a foundation model's functionality, only affect tails of distributions (and as such may only threaten fact-based reasoning) (https://arxiv.org/abs/2403.07857), or are otherwise not suitably general. It has been shown in the case of LLMs that model collapse can lead to repetitive outputs (https://arxiv.org/abs/2311.09807). Much of the research has been performed in extremely synthetic environments (https://arxiv.org/abs/2402.07712).
+- This shows that injection of model outputs into training data can, over a reasonable amount of time, lead to failure of the model. In particular, the generative capabilities of the model are threatened.
+- There seems to be a smoothing and averaging of pixel values, from the extreme prevalence of 0s to something more like normally distributed values with mean pixel value 0.5. It makes sense that as gaussian noise in the VAE accumulates, the maximum entropy distribution is tended towards for values between 0 and 1, which is the uniform distribution. I have not yet run this for enough iterations for this to occur, but I expect it to happen.
+- Old classifiers perform less well on newly generated datasets. This implies a gradually growing statistical distance and growing irrelevance of early features
+- Whether the classifier or VAE is reinitialised or not seems to make little difference. This implies that enough samples are being generated (over 10,000) that previous data is nearly completely lost.
+- Crucially, model collapse can be clearly seen for image data. As these experiments can take around 2 hours to run even with large amounts of data, this may serve as a good playground for testing this phenomenon. LLMs are likely too big for any small researcher to see model collapse occur in any important way.
+- The rate of model collapse can be measured in a data-driven way by using the accuracy and loss of classifiers trained on earlier iterations of the model collapse, applied to later generations. This gives a metric of the rate of model collapse
+- Average VAE loss decreases after each iteration. This implies that the generations of a previous VAE are easier to compress for the next, which makes sense from the perspective of a gradual loss of complexity and the reinforcement of pre-existing features.
+
+## Further Improvements
+
+- VAE architecture currently only has one hidden layer. Good results have been achieved with a 784-256-32-24-16 architecture. https://arxiv.org/pdf/1812.07238
+- Convolutional classifier is likely considerably faster than the current FNN
+- I could experiment with EMNIST? https://arxiv.org/abs/1702.05373. An interesting way to make it more practical. [An EMNIST version can now be found in another colab notebook]
+- Introduce newly generated images into the dataset slowly, such that it doesn't just train on entirely new digits. This way, the gradual failure of the VAE could be observed in a more realistic way. This is, after all, supposed to reproduce the model collapse which one would expect to happen to LLMs in the next couple of years.
+- The paper https://arxiv.org/pdf/1812.07238 on sparsity in VAEs gives some good tools for testing how smooth the latent space is. As the data after many iterations may converge on a kind of clustered noise, the latent space directions should have sparse properties initially and lose them over successive iterations of generation and compression.
+- Try using the FID score to test the difference between generated and original datasets (as opposed to separate classifier loss).
+- See how pixel statistics change over time. It seems from cursory analysis that the mean pixel value tends towards 0.5, as opposed to the MNIST value of around 0.13. If this were the case, it may imply something general about how model collapse could be observed in real-world foundation models. I would expect a regression towards the mean for continual introduction of gaussian errors, but I can't see a good reason why the mean of such errors should be 0.5?
+
