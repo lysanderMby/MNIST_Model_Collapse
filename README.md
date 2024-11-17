@@ -12,3 +12,22 @@ For a good introduction to model collapse, see https://www.nature.com/articles/s
 This repo aims to show model collapse on image data in a computationally efficient and easily understandable way.
 
 A variational autoencoder (VAE) is trained on MNIST alongside a classifier. This VAE is then used to generate a new dataset of MNIST-like digits, which are then classified using the classifier trained on the true MNIST dataset. This process is repeated, with the next VAE trained on the previous VAE's generations, and the next VAE's generations classified by the previous classifier. This allows us to see how noise creeps into generations over time due to the saturation of prior model outputs.
+
+## Training process
+
+To understand how this impact the outputs, lets look at random samples taken from MNIST.
+
+![image](https://github.com/user-attachments/assets/9506a7dd-cc8d-49d8-b73e-47c88d6652b7)
+
+A VAE is trained on the full dataset of 60,000 images until convergence. Using this trained model, 60,000 new images are sampled to create a mock dataset for further training. After a single iteration, these generations are quite close to the original MNIST data.
+
+![image](https://github.com/user-attachments/assets/33ad0457-64df-4a23-bc73-4282a6b37737)
+
+This process can then be continued indefinitely. As you might have imagined, the quality of these generations does not stay high quality for very long. After just 10 iterations, the digits look significantly less clear and comprehensible that after 1 iteration. But, there is perhaps a more notable change which occurs. The images lose a very large amount of diversity. In almost every experiment done which does not quickly descend into white noise, the images generated wind up entirely 8s. 
+
+![image](https://github.com/user-attachments/assets/4b5830bc-2e26-40d5-9e2b-8acec1ba7cf7)
+
+And after over 80 generations, a stable point seems to emerge. A kindd of smudged dataset of almost entirely 8s seems to be an attractor state of this system.
+
+![image](https://github.com/user-attachments/assets/c0d21a58-dcad-430e-b003-0e38d0d1ba3f)
+
