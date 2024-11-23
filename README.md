@@ -29,7 +29,7 @@ This process can then be continued indefinitely. As you might have imagined, the
 
 ![image](https://github.com/user-attachments/assets/4b5830bc-2e26-40d5-9e2b-8acec1ba7cf7)
 
-And after over 80 generations, a stable point seems to emerge. A kindd of smudged dataset of almost entirely 8s seems to be an attractor state of this system.
+And after over 80 generations, a stable point seems to emerge. A kind of smudged dataset of almost entirely 8s seems to be an attractor state of this system.
 
 ![image](https://github.com/user-attachments/assets/c0d21a58-dcad-430e-b003-0e38d0d1ba3f)
 
