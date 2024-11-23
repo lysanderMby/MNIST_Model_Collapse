@@ -1,7 +1,10 @@
 # MNIST_Model_Collapse
-Demonstrating model collapse on image data using the MNIST and EMNIST datasets
-
+Demonstrating model collapse on image data using the MNIST and EMNIST datasets.
+MNIST:
 ![animation](https://github.com/user-attachments/assets/bc1ed16d-76af-4f46-b158-2ee943df3739)
+EMNIST:
+![animation_EMNIST](https://github.com/user-attachments/assets/e14ee240-df12-47b6-ac6c-03d1d91d9870)
+
 
 Model collapse is the term given to failure of a model to correctly generate or discriminate across a real world distribution when it is repeatedly fed its own generations as training data. Given the importance of LLMs in frontier AI development and the now ubiquitous presence of LLM outputs in internet text archives, this phenomenon could slow or otherwise severely disrupt the creation of new foundation models over the next couple of years. (For examples, see https://arxiv.org/pdf/2402.07712v2. For potential resolutions, see https://arxiv.org/pdf/2404.01413)
 
@@ -34,6 +37,22 @@ And after over 80 generations, a stable point seems to emerge. A kind of smudged
 ![image](https://github.com/user-attachments/assets/c0d21a58-dcad-430e-b003-0e38d0d1ba3f)
 
 Putting all this together into a longer run, we can see how model collapse causes the generations to tend towards a small self-reinforcing set. Rather than accurately sampling from the input distribution, excessive training on a model's own outputs causes very high confidence in outputs driven by model bias rather than the variance inherent in the data.
+
+## EMNIST
+
+All these ideas are most easily applied to the MNIST dataset, where generations can remain high quality for several iterations. Model collapse can also be resolutely shown here with a minimial amount of compute obtainable using most commercial laptops.
+
+For better depth of understanding, these ideas are also applied to EMNIST. We use the balanced EMNIST dataset in the hope that the balanced classes will allow better generations across all classes of digits. These initial generations are of clearly lower quality, possibly due to the quite restricted compute used in these experiments and the relatively higher complexity of this dataset.
+
+![910c2589-3e46-4526-bbb9-89ec9f79f6b4](https://github.com/user-attachments/assets/179db32b-6210-41bb-a5dd-d184a0e1f4f7)
+
+However, as the model collapse continues we see a very strange pattern. In this regime, the generations also tend towards repeated smudged 8s, similar to the MNIST case. (Note that the below image was selected as the best example of this trend. This result is not always quite so clear).
+
+![eabe6db5-b6c7-472d-8dcb-96a6f6504d00](https://github.com/user-attachments/assets/5a454860-ae26-4b22-9ac5-ac64baf50996)
+
+Putting all this together, we get the below animation of model collapse on diverse character and digit data, and the apparent attractor point of low resolution symmetry.
+
+![animation_EMNIST](https://github.com/user-attachments/assets/7b0d72fd-f45b-4304-8339-79d5432d8480)
 
 ## Key Findings
 
