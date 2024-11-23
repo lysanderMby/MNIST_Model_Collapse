@@ -1,5 +1,6 @@
 # MNIST_Model_Collapse
 Demonstrating model collapse on image data using the MNIST and EMNIST datasets.
+
 MNIST:
 ![animation](https://github.com/user-attachments/assets/bc1ed16d-76af-4f46-b158-2ee943df3739)
 EMNIST:
